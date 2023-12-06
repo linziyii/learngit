@@ -1,7 +1,9 @@
-GET http://localhost:8081/hello
-Accept: application/json
+GET http://localhost:8081/hello/get
+#Accept: application/json
 ###
 POST http://localhost:8081/hello/post
 Content-Type:application/x-www-form-urlencoded
 
 map=Test
+###
+GET http://localhost:8081/hello/test
