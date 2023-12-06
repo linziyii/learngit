@@ -1,2 +1,3 @@
-GET http://localhost:8081/ebook
+POST http://localhost:8081/ebook
+
 ###
