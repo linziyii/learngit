@@ -1,6 +1,6 @@
 package com.example.mysql.req;
 
-public class EbookReq {
+public class EbookQueryReq extends PageReq{
     private Long id;
 
     private String name;

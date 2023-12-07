@@ -3,7 +3,7 @@ package com.example.mysql.resp;
 public class CommonResp<T> {
     private boolean success=true;
     private T content;
-    private String messaghe;
+    private String message;
 
     public boolean isSuccess() {
         return success;
@@ -22,10 +22,10 @@ public class CommonResp<T> {
     }
 
     public String getMessaghe() {
-        return messaghe;
+        return message;
     }
 
     public void setMessaghe(String messaghe) {
-        this.messaghe = messaghe;
+        this.message = messaghe;
     }
 }
