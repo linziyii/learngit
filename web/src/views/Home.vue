@@ -66,10 +66,48 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent } from 'vue';
+// import { defineComponent } from 'vue';
 import { ref } from 'vue';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 const selectedKeys1 = ref<string[]>(['2']);
 const selectedKeys2 = ref<string[]>(['1']);
 const openKeys = ref<string[]>(['sub1']);
+// export default defineComponent({
+//   name: 'Home',
+//   data() {
+//     return {
+//       UserOutlined, LaptopOutlined, NotificationOutlined,
+//     }
+//   },
+//   setup() {
+//       const selectedKeys1 = ref<string[]>(['2']);
+//       const selectedKeys2 = ref<string[]>(['1']);
+//       const openKeys = ref<string[]>(['sub1']);
+//     return {
+//       selectedKeys1,
+//       selectedKeys2,
+//       openKeys,
+      
+//     };
+//   }
+// });
 </script>
+
+<style scoped>
+#components-layout-demo-top-side .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top-side .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+</style>
