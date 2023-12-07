@@ -21,11 +21,11 @@ public class CommonResp<T> {
         this.content = content;
     }
 
-    public String getMessaghe() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessaghe(String messaghe) {
-        this.message = messaghe;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -1,8 +1,16 @@
 package com.example.mysql.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 public class PageReq {
-    private int page;
-    private int size;
+    @NotNull(message = "页码不能为空")
+    public int page;
+
+
+    @NotNull(message = "每页条数不能为空")
+    @Max(value = 1000,message = "每页条数不能超过1000条")
+    public int size;
 
     public int getPage() {
         return page;

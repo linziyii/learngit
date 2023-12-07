@@ -7,6 +7,7 @@ import com.example.mysql.req.EbookQueryReq;
 import com.example.mysql.req.EbookSaveReq;
 import com.example.mysql.resp.EbookQueryResp;
 import com.example.mysql.resp.PageResp;
+import com.example.mysql.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +27,9 @@ public class EbookService {
         if(!ObjectUtils.isEmpty(ebookQueryReq.getName())){
             criteria.andNameLike("%"+ ebookQueryReq.getName()+"%");  //作用：定义select规则，将其传入mapper的select可起到作用
         }
+        if(!ObjectUtils.isEmpty(ebookQueryReq.getCategoryId2())){
+            criteria.andCategory2IdEqualTo(ebookQueryReq.getCategoryId2());
+        }
         PageHelper.startPage(ebookQueryReq.getPage(), ebookQueryReq.getSize());
         List<Ebook> ebookList=ebookMapper.selectByExample(example);
         PageInfo<Ebook> pageInfo=new PageInfo<>(ebookList);
@@ -42,11 +46,16 @@ public class EbookService {
     }
     public void save(EbookSaveReq ebookSaveReq){
         Ebook ebook=new Ebook();
+        SnowFlake snowFlake=new SnowFlake(1,1);
         BeanUtils.copyProperties(ebookSaveReq,ebook);
         if(ObjectUtils.isEmpty(ebook.getId())){
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         }else{
             ebookMapper.updateByPrimaryKey(ebook);
         }
+    }
+    public void delete(Long id){
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }
