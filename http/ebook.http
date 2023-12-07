@@ -1,3 +1,5 @@
-POST http://localhost:8081/ebook
+GET http://localhost:8081/ebook/query?page=4&size=1
 
 ###
+
+POST http://localhost:8081/ebook/save?id=1&name=sha000hidie&docCount=16&viewCount=1&voteCount=0

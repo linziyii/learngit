@@ -1,6 +1,6 @@
 package com.example.mysql.resp;
 
-public class EbookResp {
+public class EbookQueryResp {
 
     private String name;
 
