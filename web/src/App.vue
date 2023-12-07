@@ -2,14 +2,7 @@
   <a-layout>
       <the-header></the-header>
       <router-view/>
-    <a-layout-footer style="text-align: center">
-      <span>MyKi ©2023</span>
-      <div class="a-item" style="display: flex; justify-content: center; gap: 10px; color: #888888;">
-        <a href="">关于我们</a>
-        <a href="">加入我们</a>
-        <a href="">意见建议</a>
-      </div>   
-    </a-layout-footer>
+      <the-footer></the-footer>
   </a-layout>
 </template>
 
@@ -17,7 +10,7 @@
 import { ref } from 'vue';
 import { defineComponent } from 'vue';
 import TheHeader from '@/components/the-header.vue';
-import theHeader from './components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 const selectedKeys1 = ref<string[]>(['2']);
 const selectedKeys2 = ref<string[]>(['1']);
@@ -26,6 +19,7 @@ const openKeys = ref<string[]>(['sub1']);
     name: 'app',
     components: {
       TheHeader,
+      TheFooter,
     },
   });
 </script>
