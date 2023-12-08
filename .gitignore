@@ -1,0 +1,32 @@
+# IntelliJ IDEA files
+.idea/
+
+# Compiled Java classes
+target/
+
+# Other IDEA-related files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Logs
+*.log
+
+# Generated files
+*.class
+
+# IDE-specific directory
+.idea/
+
+# Spring Boot specific
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+
+# Maven specific
+target/
