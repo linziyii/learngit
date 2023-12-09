@@ -4,8 +4,7 @@
       :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
       <a-table
-        :columns="columns"
-        
+        :columns="columns"    
         :data-source="ebooks"
         :pagination="pagination"
         :loading="loading"
