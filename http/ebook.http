@@ -2,5 +2,7 @@ GET http://localhost:8081/ebook/query
 
 
 ###
+POST http://localhost:8081/ebook/save?name=西游记&description=很好看的&docCount=1&viewCount=2&voteCount=3
 
-POST http://localhost:8081/ebook/save?name=sha000hidie&docCount=16&viewCount=1&voteCount=0
+###
+POST http://localhost:8081/ebook/delete/id=388606167108161536

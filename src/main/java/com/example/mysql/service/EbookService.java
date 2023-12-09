@@ -46,10 +46,10 @@ public class EbookService {
     }
     public void save(EbookSaveReq ebookSaveReq){
         Ebook ebook=new Ebook();
-        SnowFlake snowFlake=new SnowFlake(1,1);
+        Ebook ebook1=new Ebook();
         BeanUtils.copyProperties(ebookSaveReq,ebook);
-        if(ObjectUtils.isEmpty(ebook.getId())){
-            ebook.setId(snowFlake.nextId());
+        ebook1=ebookMapper.selectByPrimaryKey(ebookSaveReq.getId());
+        if(ObjectUtils.isEmpty(ebook1)){
             ebookMapper.insert(ebook);
         }else{
             ebookMapper.updateByPrimaryKey(ebook);

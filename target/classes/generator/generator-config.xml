@@ -47,6 +47,6 @@
         <!--<table tableName="content"/>-->
         <!--<table tableName="user"/>-->
 <!--        <table tableName="ebook" domainObjectName="Ebook"/>-->
-        <table tableName="category" domainObjectName="Category"/>
+        <table tableName="content" domainObjectName="Content"/>
     </context>
 </generatorConfiguration>

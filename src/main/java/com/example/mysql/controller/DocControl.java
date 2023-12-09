@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -16,10 +18,10 @@ import java.util.List;
 public class DocControl {
     @Autowired
     private DocService docService;
-    @GetMapping("/doc/query")
-    public CommonResp query(@Valid DocQueryReq docQueryReq){
+    @GetMapping("/doc/list/{ebookid}")
+    public CommonResp query(@PathVariable Long ebookid){
         CommonResp<List<DocQueryResp>> resp=new CommonResp();
-        List<DocQueryResp> list=docService.selectall(docQueryReq);
+        List<DocQueryResp> list=docService.selectall(ebookid);
         resp.setContent(list);
         return resp;
     }
@@ -29,10 +31,18 @@ public class DocControl {
         docService.save(docSaveReq);
         return resp;
     }
-    @PostMapping("/doc/delete/{id}")
-    public CommonResp delete(@PathVariable Long id){
+    @PostMapping("/doc/delete/{idsStr}")
+    public CommonResp delete(@PathVariable String idsStr){
         CommonResp resp=new CommonResp();
-        docService.delete(id);
+        List<String> list=Arrays.asList(idsStr.split(","));
+        docService.delete(list);
+        return resp;
+    }
+    @GetMapping("/doc/find-content/{id}")
+    public CommonResp findcontent(@PathVariable Long id){
+        CommonResp<String> resp=new CommonResp();
+        String list=docService.findcontent(id);
+        resp.setContent(list);
         return resp;
     }
 }

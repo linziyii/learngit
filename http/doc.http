@@ -1,1 +1,3 @@
 GET http://localhost:8081/doc/query
+###
+POST http://localhost:8081/doc/save

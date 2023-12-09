@@ -4,6 +4,7 @@ import com.example.mysql.entity.Doc;
 import com.example.mysql.entity.DocExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface DocMapper {
     long countByExample(DocExample example);
@@ -27,4 +28,5 @@ public interface DocMapper {
     int updateByPrimaryKeySelective(Doc record);
 
     int updateByPrimaryKey(Doc record);
+
 }

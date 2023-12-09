@@ -42,3 +42,9 @@ insert into `category` (id, parent, name, sort) values (500, 000, '其它', 500)
 insert into `category` (id, parent, name, sort) values (501, 500, '服务器', 501);
 insert into `category` (id, parent, name, sort) values (502, 500, '开发工具', 502);
 insert into `category` (id, parent, name, sort) values (503, 500, '热门服务端语言', 503);
+
+create table `content` (
+                           `id` bigint not null comment '文档id',
+                           `content` mediumtext not null comment '内容',
+                           primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='文档内容';

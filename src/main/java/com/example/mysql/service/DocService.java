@@ -1,7 +1,10 @@
 package com.example.mysql.service;
 
+import com.example.mysql.entity.Content;
+import com.example.mysql.entity.ContentExample;
 import com.example.mysql.entity.Doc;
 import com.example.mysql.entity.DocExample;
+import com.example.mysql.mapper.ContentMapper;
 import com.example.mysql.mapper.DocMapper;
 import com.example.mysql.req.DocQueryReq;
 import com.example.mysql.req.DocSaveReq;
@@ -10,11 +13,14 @@ import com.example.mysql.resp.PageResp;
 import com.example.mysql.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +28,8 @@ import java.util.List;
 public class DocService {
     @Resource
     private DocMapper docMapper;
+    @Resource
+    private ContentMapper contentMapper;
     public PageResp<DocQueryResp> list(DocQueryReq docQueryReq){
         DocExample example=new DocExample();
         DocExample.Criteria criteria=example.createCriteria();
@@ -43,22 +51,38 @@ public class DocService {
         return pageResp;
     }
     public void save(DocSaveReq docSaveReq){
+        DocExample docExample=new DocExample();
+        DocExample.Criteria criteria=docExample.createCriteria();
+        criteria.andNameEqualTo(docSaveReq.getName());
         Doc doc=new Doc();
-        SnowFlake snowFlake=new SnowFlake(1,1);
+        Doc doc1=new Doc();
+        Content content=new Content();
         BeanUtils.copyProperties(docSaveReq,doc);
-        if(ObjectUtils.isEmpty(doc.getId())){
-            doc.setId(snowFlake.nextId());
+        BeanUtils.copyProperties(docSaveReq,content);
+        doc1=docMapper.selectByPrimaryKey(docSaveReq.getId());
+        if(ObjectUtils.isEmpty(doc1)){
             docMapper.insert(doc);
+            List<Doc> i=docMapper.selectByExample(docExample);
+            content.setId(i.get(0).getId());
+            contentMapper.insert(content);
         }else{
             docMapper.updateByPrimaryKey(doc);
+            contentMapper.updateByExampleWithBLOBs(content,new ContentExample());
         }
     }
     public void delete(Long id){
         docMapper.deleteByPrimaryKey(id);
     }
-    public List<DocQueryResp> selectall(DocQueryReq docQueryReq){
+    public void delete(List<String> ids){
+        DocExample docExample=new DocExample();
+        DocExample.Criteria criteria=docExample.createCriteria();
+        criteria.andIdIn(ids);
+        docMapper.deleteByExample(docExample);
+    }
+    public List<DocQueryResp> selectall(Long ebookid){
         DocExample example=new DocExample();
         example.setOrderByClause("sort asc");
+        example.createCriteria().andEbookIdEqualTo(ebookid);
         List<Doc> docList=docMapper.selectByExample(example);
         List<DocQueryResp> docQueryResp =new ArrayList<>();
         for(Doc doc:docList){
@@ -67,5 +91,14 @@ public class DocService {
             docQueryResp.add(e);   //添加到列表中
         }
         return docQueryResp;
+    }
+    public String findcontent(Long id){
+        Content content=contentMapper.selectByPrimaryKey(id);
+        if(ObjectUtils.isEmpty(content)){
+            return  "";
+        }
+        else{
+            return content.getContent();
+        }
     }
 }
