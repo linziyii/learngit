@@ -3,6 +3,11 @@
     <a-layout-content
       :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <p>
+        <a-button type="primary" @click="add()" size="large">
+          新增
+        </a-button>
+      </p>
       <a-table
         :columns="columns" 
         :row-key="record => record.id"   
@@ -40,9 +45,19 @@
                 <a-button type="primary" @click="edit(record)">
                   编辑
                 </a-button>
-                <a-button type="primary" danger block>
+                <!-- <a-button type="primary" danger block>
                   删除
-                </a-button>
+                </a-button> -->
+                <a-popconfirm
+                  title="删除后不可恢复，确认删除?"
+                  ok-text="是"
+                  cancel-text="否"
+                  @confirm="handleDelete(record.id)"
+                >
+                  <a-button type="primary" danger block>
+                    删除
+                  </a-button>
+                </a-popconfirm>
               </a-space>
             </span>    
           </template>
@@ -199,6 +214,28 @@
         console.log(record)
       };
 
+      /**
+       * 新增
+       */
+       const add = () => {
+        modalVisible.value = true;
+        ebook.value = {};
+      };
+      
+      const handleDelete = (id: number) => {
+        console.log("id", id)
+        axios.delete("/ebook/delete/" + id).then((response) => {
+          const data = response.data; // data = commonResp
+          if (data.success) {
+            // 重新加载列表
+            handleQuery({
+              page: pagination.value.current,
+              size: pagination.value.pageSize,
+            });
+          }
+        });
+      };
+
       onMounted(() => {
         handleQuery({
           page: 1,
@@ -214,11 +251,13 @@
         handleTableChange,
 
         edit,
+        add,
 
         ebook,
         modalVisible,
         modalLoading,
-        handleModalOk
+        handleModalOk,
+        handleDelete
       }
     }
   });

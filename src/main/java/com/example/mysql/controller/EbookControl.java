@@ -29,7 +29,7 @@ public class EbookControl {
         ebookService.save(ebookSaveReq);
         return resp;
     }
-    @PostMapping("/ebook/delete/{id}")
+    @DeleteMapping("/ebook/delete/{id}")
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp=new CommonResp();
         ebookService.delete(id);
