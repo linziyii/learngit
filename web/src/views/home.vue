@@ -86,16 +86,16 @@ export default defineComponent({
     onMounted(() => {
       console.log("onMounted");
       axios.get("/ebook/list").then((response) => {
-        const data = response.data;
-    if (data.success && data.content && Array.isArray(data.content.list)) {
-      ebooks.value = data.content.list;
-      ebooks1.books = data.content.list;
-      console.log(response);
-    } else {
-      console.error('Invalid data structure:', data);
-    }
+      const data = response.data;
+      if (data.success && data.content && Array.isArray(data.content.list)) {
+        ebooks.value = data.content.list;
+        ebooks1.books = data.content.list;
+        console.log(response);
+      } else {
+        console.error('Invalid data structure:', data);
+      }
+        });
       });
-    });
 
     return {
       ebooks,
