@@ -44,10 +44,10 @@
       </template>
 
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'parent' || column.key === 'name' || column.key === 'sort'">
-          <span>niha</span>  
-        </template>
-          <template v-else-if="column.key === 'action'">
+        <!-- <template v-if="column.key === 'parent' || column.key === 'name' || column.key === 'sort'">
+          <span>{{ record.parent }}</span>  
+        </template> -->
+          <template v-if="column.key === 'action'">
             <span>
               <a-space size="small">
                 <a-button type="primary" @click="edit(record)">
@@ -154,7 +154,7 @@
           loading.value = false;
           const data = response.data;
           if (data.success) {
-            categorys.value = data.content.list;
+            categorys.value = data.content;
 
             // 重置分页按钮
             pagination.value.current = params.page;
