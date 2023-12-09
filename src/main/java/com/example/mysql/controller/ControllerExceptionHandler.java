@@ -1,5 +1,7 @@
 package com.example.mysql.controller;
 
+import com.example.mysql.exception.BusinessException;
+import com.example.mysql.exception.BusinessExceptionCode;
 import com.example.mysql.resp.CommonResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,4 +38,24 @@ public class ControllerExceptionHandler {
      * @param e
      * @return
      */
+
+    @ExceptionHandler(value = BusinessException.class)
+    @ResponseBody
+    public CommonResp validExceptionHandler(BusinessException e) {
+        CommonResp commonResp = new CommonResp();
+        LOG.warn("业务异常：{}", e.getCode().getDesc());
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getCode().getDesc());
+        return commonResp;
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public CommonResp validExceptionHandler(Exception e) {
+        CommonResp commonResp = new CommonResp();
+        LOG.warn("系统异常：", e);
+        commonResp.setSuccess(false);
+        commonResp.setMessage("系统出现异常");
+        return commonResp;
+    }
 }
