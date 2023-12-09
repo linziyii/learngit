@@ -1,32 +1,33 @@
-# IntelliJ IDEA files
-.idea/
-
-# Compiled Java classes
-target/
-
-# Other IDEA-related files
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# Logs
-*.log
-
-# Generated files
-*.class
-
-# IDE-specific directory
-.idea/
-
-# Spring Boot specific
+/log/
 target/
 !.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# Eclipse specific
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
+.settings
+.springBeans
+.sts4-cache
 
-# Maven specific
-target/
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

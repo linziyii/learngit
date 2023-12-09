@@ -37,7 +37,7 @@
     <a-layout-content
     :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
   >
-      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+      <a-list v-if="ebooks" item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
         <template #renderItem="{ item }">
           <a-list-item key="item.name">
             <template #actions>
@@ -87,9 +87,13 @@ export default defineComponent({
       console.log("onMounted2222");
       axios.get("/ebook/list").then((response) => {
         const data = response.data;
-        ebooks.value = data.content;
-        ebooks1.books = data.content;
-        console.log(response);
+    if (data.success && data.content && Array.isArray(data.content.list)) {
+      ebooks.value = data.content.list;
+      ebooks1.books = data.content.list;
+      console.log(response);
+    } else {
+      console.error('Invalid data structure:', data);
+    }
       });
     });
 
