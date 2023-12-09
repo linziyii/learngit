@@ -5,7 +5,7 @@
     >
       <a-table
         :columns="columns"
-        :row-key="record => record.id"
+        
         :data-source="ebooks"
         :pagination="pagination"
         :loading="loading"
@@ -18,34 +18,35 @@
           </span>
         </template>     
       </template>
-          <template #bodyCell="{ column, record }">
-            <template v-if="column.key === 'cover'">
-              <span><img  v-if="record.cover" :src="record.cover" /></span>  
-            </template>
-            <template v-else-if="column.key === 'tags'">
-              <span>
-                <a-tag
-                  v-for="tag in record.tags"
-                  :key="tag"
-                  :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
-                >
-                  {{ tag.toUpperCase() }}
-                </a-tag>
-              </span>
-            </template>
-            <template v-else-if="column.key === 'action'">
-              <span>
-                <a-space size="small">
-                  <a-button type="primary" block>
-                    编辑
-                  </a-button>
-                  <a-button type="primary" danger block>
-                    删除
-                  </a-button>
-                </a-space>
-              </span>    
-            </template>
-        </template>
+
+      <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'cover'">
+            <span><img  v-if="record.cover" :src="record.cover" /></span>  
+          </template>
+          <template v-else-if="column.key === 'tags'">
+            <span>
+              <a-tag
+                v-for="tag in record.tags"
+                :key="tag"
+                :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+              >
+                {{ tag.toUpperCase() }}
+              </a-tag>
+            </span>
+          </template>
+          <template v-else-if="column.key === 'action'">
+            <span>
+              <a-space size="small">
+                <a-button type="primary" block>
+                  编辑
+                </a-button>
+                <a-button type="primary" danger block>
+                  删除
+                </a-button>
+              </a-space>
+            </span>    
+          </template>
+      </template>
       </a-table>
     </a-layout-content>
   </a-layout>
