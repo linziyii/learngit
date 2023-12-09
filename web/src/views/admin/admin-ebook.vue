@@ -4,7 +4,8 @@
       :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
       <a-table
-        :columns="columns"    
+        :columns="columns" 
+        :row-key="record => record.id"   
         :data-source="ebooks"
         :pagination="pagination"
         :loading="loading"
@@ -128,7 +129,7 @@
           dataIndex: 'voteCount',
           key: 'voteCount', // 使用 dataIndex 作为 key
         },
-        {
+        { 
           title: '操作',
           key: 'action',
           dataIndex: 'action',
@@ -195,6 +196,7 @@
       const edit = (record: any) => {
         modalVisible.value = true;
         ebook.value = record
+        console.log(record)
       };
 
       onMounted(() => {

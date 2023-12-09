@@ -1,6 +1,7 @@
 package com.example.mysql.resp;
 
 public class EbookQueryResp {
+    private Long id;
 
     private String name;
 
@@ -18,6 +19,13 @@ public class EbookQueryResp {
 
     private Integer voteCount;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -89,6 +97,7 @@ public class EbookQueryResp {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", category1Id=").append(category1Id);
         sb.append(", category2Id=").append(category2Id);
