@@ -84,7 +84,7 @@ export default defineComponent({
     const ebooks1 = reactive({books: []});
 
     onMounted(() => {
-      console.log("onMounted2222");
+      console.log("onMounted");
       axios.get("/ebook/list").then((response) => {
         const data = response.data;
     if (data.success && data.content && Array.isArray(data.content.list)) {
