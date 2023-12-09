@@ -16,7 +16,7 @@ import javax.validation.Valid;
 public class EbookControl {
     @Autowired
     private EbookService ebookService;
-    @GetMapping("/ebook/query")
+    @GetMapping("/ebook/list")
     public CommonResp query(@Valid EbookQueryReq ebookQueryReq){
         CommonResp<PageResp<EbookQueryResp>> resp=new CommonResp();
         PageResp<EbookQueryResp> list=ebookService.list(ebookQueryReq);
