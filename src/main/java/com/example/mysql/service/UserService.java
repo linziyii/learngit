@@ -6,6 +6,7 @@ import com.example.mysql.exception.BusinessException;
 import com.example.mysql.exception.BusinessExceptionCode;
 import com.example.mysql.mapper.UserMapper;
 import com.example.mysql.req.UserQueryReq;
+import com.example.mysql.req.UserResetReq;
 import com.example.mysql.req.UserSaveReq;
 import com.example.mysql.resp.UserQueryResp;
 import com.example.mysql.resp.PageResp;
@@ -57,6 +58,7 @@ public class UserService {
             UserExample userExample=new UserExample();
             userExample.createCriteria().andIdEqualTo(userSaveReq.getId());
             user.setLoginName(null);
+            user.setPassword(null);
             userMapper.updateByExample(user,userExample);
         }
     }
@@ -71,5 +73,13 @@ public class UserService {
         } else{
             return userList.get(0);
         }
+    }
+
+    public void resetPassword(UserResetReq userResetReq){
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andIdEqualTo(userResetReq.getId());
+        User user=new User();
+        BeanUtils.copyProperties(userResetReq,user);
+        userMapper.updateByExampleSelective(user,userExample);
     }
 }
