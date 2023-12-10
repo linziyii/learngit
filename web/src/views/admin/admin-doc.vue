@@ -68,13 +68,19 @@
             <a-form-item>
               <a-tree-select
                 v-model:value="doc.parent"
+                show-search
                 style="width: 100%"
                 :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                 :tree-data="treeSelectData"
                 placeholder="请选择父文档"
+                allow-clear
                 tree-default-expand-all
-                :replaceFields="{title: 'name', key: 'id', value: 'id'}"
+                tree-node-filter-prop="name"
               >
+              <template #title="{ id, name }">
+                <template v-if="id === 0">无</template>
+                <template v-else>{{ name }}</template>
+              </template>
               </a-tree-select>
             </a-form-item>
             <a-form-item>
@@ -137,6 +143,7 @@
       const treeSelectData = ref();
       treeSelectData.value = [];
 
+
       const columns = [
         {
           title: '名称',
@@ -184,6 +191,7 @@
 
             // 父文档下拉框初始化，相当于点击新增
             treeSelectData.value = Tool.copy(level1.value);
+            console.log("treeSelectData", treeSelectData.value)
             // 为选择树添加一个"无"
             treeSelectData.value.unshift({id: 0, name: '无'});
           } else {
@@ -195,7 +203,7 @@
       // -------- 表单 ---------
       const doc = ref();
       doc.value = {
-        ebookId: route.query.ebookId
+        ebookId: route.query.ebookId,
       };
       const modalVisible = ref(false);
       const modalLoading = ref(false);
@@ -315,7 +323,7 @@ const editor = ref<E | null>(null);
         setDisable(treeSelectData.value, record.id);
 
         // 为选择树添加一个"无"
-        treeSelectData.value.unshift({id: 0, name: '无'});
+        treeSelectData.value.unshift({ id: 0, name: '无' });
       };
 
       /**
@@ -413,3 +421,4 @@ const editor = ref<E | null>(null);
     height: 50px;
   }
 </style>
+
