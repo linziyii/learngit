@@ -373,9 +373,9 @@ const editor = ref<E | null>(null);
       onMounted(() => {
         handleQuery();
   // 在 DOM 就绪后初始化富文本编辑器
-  const editor = new E('#content');
-  editor.config.zIndex = 0;
-  editor.create();
+      editor.value = new E('#content');
+      editor.value.config.zIndex = 0;
+      editor.value.create();
       });
 
       return {
