@@ -81,11 +81,20 @@
               <a-input v-model:value="doc.sort" placeholder="顺序"/>
             </a-form-item>
             <a-form-item>
+              <a-button type="primary" @click="handlePreviewContent()">
+                <EyeOutlined /> 内容预览
+              </a-button>
+            </a-form-item>
+            <a-form-item>
               <div id="content"></div>
             </a-form-item>
           </a-form>
         </a-col>
       </a-row>
+
+      <a-drawer width="900" placement="right" :closable="false" :visible="drawerVisible" @close="onDrawerClose">
+        <div class="wangeditor" :innerHTML="previewHtml"></div>
+      </a-drawer>
 
     </a-layout-content>
   </a-layout>
@@ -124,6 +133,9 @@
       param.value = {};
       const docs = ref();
       const loading = ref(false);
+      // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
+      const treeSelectData = ref();
+      treeSelectData.value = [];
 
       const columns = [
         {
@@ -169,6 +181,11 @@
             level1.value = [];
             level1.value = Tool.array2Tree(docs.value, 0);
             console.log("树形结构：", level1);
+
+            // 父文档下拉框初始化，相当于点击新增
+            treeSelectData.value = Tool.copy(level1.value);
+            // 为选择树添加一个"无"
+            treeSelectData.value.unshift({id: 0, name: '无'});
           } else {
             message.error(data.message);
           }
@@ -176,19 +193,18 @@
       };
 
       // -------- 表单 ---------
-      // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
-      const treeSelectData = ref();
-      treeSelectData.value = [];
       const doc = ref();
-      doc.value = {};
+      doc.value = {
+        ebookId: route.query.ebookId
+      };
       const modalVisible = ref(false);
       const modalLoading = ref(false);
-      const editor = new E('#content');
-      editor.config.zIndex = 0;
+// 在 onMounted 钩子内将 editor 声明为 ref
+const editor = ref<E | null>(null);
 
       const handleSave = () => {
         modalLoading.value = true;
-        doc.value.content = editor.txt.html();
+        doc.value.content = editor.value?.txt.html();
         axios.post("/doc/save", doc.value).then((response) => {
           modalLoading.value = false;
           const data = response.data; // data = commonResp
@@ -277,7 +293,7 @@
         axios.get("/doc/find-content/" + doc.value.id).then((response) => {
           const data = response.data;
           if (data.success) {
-            editor.txt.html(data.content)
+            editor.value?.txt.html(data.content)
           } else {
             message.error(data.message);
           }
@@ -289,7 +305,7 @@
        */
       const edit = (record: any) => {
         // 清空富文本框
-        editor.txt.html("");
+        editor.value?.txt.html("");
         modalVisible.value = true;
         doc.value = Tool.copy(record);
         handleQueryContent();
@@ -307,7 +323,7 @@
        */
       const add = () => {
         // 清空富文本框
-        editor.txt.html("");
+        editor.value?.txt.html("");
         modalVisible.value = true;
         doc.value = {
           ebookId: route.query.ebookId
@@ -342,10 +358,24 @@
         });
       };
 
+      // ----------------富文本预览--------------
+      const drawerVisible = ref(false);
+      const previewHtml = ref();
+      const handlePreviewContent = () => {
+        const html = editor.value?.txt.html();
+        previewHtml.value = html;
+        drawerVisible.value = true;
+      };
+      const onDrawerClose = () => {
+        drawerVisible.value = false;
+      };
+
       onMounted(() => {
         handleQuery();
-
-        editor.create();
+  // 在 DOM 就绪后初始化富文本编辑器
+  const editor = new E('#content');
+  editor.config.zIndex = 0;
+  editor.create();
       });
 
       return {
@@ -366,7 +396,12 @@
 
         handleDelete,
 
-        treeSelectData
+        treeSelectData,
+
+        drawerVisible,
+        previewHtml,
+        handlePreviewContent,
+        onDrawerClose,
       }
     }
   });
