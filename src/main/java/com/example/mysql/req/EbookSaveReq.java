@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 
 public class EbookSaveReq {
     private Long id;
-    @NotNull(message = "书名不能为空")
 
     private String name;
 

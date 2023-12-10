@@ -5,9 +5,11 @@ import com.example.mysql.entity.UserExample;
 import com.example.mysql.exception.BusinessException;
 import com.example.mysql.exception.BusinessExceptionCode;
 import com.example.mysql.mapper.UserMapper;
+import com.example.mysql.req.UserLoginReq;
 import com.example.mysql.req.UserQueryReq;
 import com.example.mysql.req.UserResetReq;
 import com.example.mysql.req.UserSaveReq;
+import com.example.mysql.resp.UserLoginResp;
 import com.example.mysql.resp.UserQueryResp;
 import com.example.mysql.resp.PageResp;
 import com.github.pagehelper.PageHelper;
@@ -16,13 +18,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class UserService {
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     @Resource
     private UserMapper userMapper;
     public PageResp<UserQueryResp> list(UserQueryReq userQueryReq){
@@ -81,5 +87,23 @@ public class UserService {
         User user=new User();
         BeanUtils.copyProperties(userResetReq,user);
         userMapper.updateByExampleSelective(user,userExample);
+    }
+    public UserLoginResp login(UserLoginReq userLoginReq){
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(userLoginReq.getLoginName());
+        List<User> userList=userMapper.selectByExample(userExample);
+        if(ObjectUtils.isEmpty(userList)){
+            LOG.info("用户名不存在，{}",userLoginReq.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        }else{
+            if(userList.get(0).getPassword().equals(userLoginReq.getPassword())){
+                UserLoginResp userLoginResp=new UserLoginResp();
+                BeanUtils.copyProperties(userList.get(0),userLoginResp);
+                return userLoginResp;
+            }else{
+                LOG.info("密码不对，输入密码：{}，数据库密码：{}",userLoginReq.getPassword(),userList.get(0).getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -50,6 +51,7 @@ public class DocService {
         pageResp.setList(docQueryResp);
         return pageResp;
     }
+    @Transactional
     public void save(DocSaveReq docSaveReq){
         DocExample docExample=new DocExample();
         DocExample.Criteria criteria=docExample.createCriteria();
