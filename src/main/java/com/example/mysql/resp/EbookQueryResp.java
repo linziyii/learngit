@@ -1,6 +1,7 @@
 package com.example.mysql.resp;
 
 public class EbookQueryResp {
+    private Long id;
 
     private String name;
 

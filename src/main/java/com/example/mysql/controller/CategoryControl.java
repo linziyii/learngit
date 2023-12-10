@@ -29,7 +29,7 @@ public class CategoryControl {
         categoryService.save(categorySaveReq);
         return resp;
     }
-    @PostMapping("/category/delete/{id}")
+    @DeleteMapping("/category/delete/{id}")
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp=new CommonResp();
         categoryService.delete(id);
