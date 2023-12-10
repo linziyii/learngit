@@ -1,6 +1,6 @@
 package com.example.mysql.req;
 
-public class CategoryQueryReq{
+public class CategoryQueryReq extends PageReq{
     private Long id;
 
     private Long parent;
