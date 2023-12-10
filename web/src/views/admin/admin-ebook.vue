@@ -47,6 +47,9 @@
           <template v-if="column.key === 'cover'">
             <span><img  v-if="record.cover" :src="record.cover" /></span>  
           </template>
+          <template v-else-if="column.key === 'category'">
+            <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
+          </template>         
           <template v-else-if="column.key === 'tags'">
             <span>
               <a-tag
@@ -61,6 +64,11 @@
           <template v-else-if="column.key === 'action'">
             <span>
               <a-space size="small">
+                <router-link :to="'/admin/doc?ebookId=' + record.id">
+                  <a-button type="primary">
+                    文档管理
+                  </a-button>
+                </router-link>
                 <a-button type="primary" @click="edit(record)">
                   编辑
                 </a-button>
@@ -99,11 +107,12 @@
       <a-form-item label="名称">
         <a-input v-model:value="ebook.name" />
       </a-form-item>
-      <a-form-item label="分类一">
-        <a-input v-model:value="ebook.category1Id" />
-      </a-form-item>
-      <a-form-item label="分类二">
-        <a-input v-model:value="ebook.category2Id" />
+      <a-form-item label="分类">
+        <a-cascader
+          v-model:value="categoryIds"
+          :field-names="{ label: 'name', value: 'id', children: 'children' }"
+          :options="level1"
+        />
       </a-form-item>
       <a-form-item label="描述">
         <a-input v-model:value="ebook.desc" type="textarea" />
@@ -143,14 +152,9 @@
           key: 'name', // 使用 dataIndex 作为 key
         },
         {
-          title: '分类一',
-          key: 'category1Id',
-          dataIndex: 'category1Id',
-        },
-        {
-          title: '分类二',
-          dataIndex: 'category2Id',
-          key: 'category2Id', // 使用 dataIndex 作为 key
+          title: '分类',
+          key: 'category',
+          dataIndex: 'category',
         },
         {
           title: '文档数',
@@ -180,6 +184,8 @@
        **/
       const handleQuery = (params: any) => {
         loading.value = true;
+        // 如果不清空现有数据，则编辑保存重新加载数据后，再点编辑，则列表显示的还是编辑前的数据
+        ebooks.value = [];
         axios.get("/ebook/list", {
           params: {
             page: params.page,
@@ -213,11 +219,17 @@
       };
  
       // -------- 表单 ---------
-      const ebook = ref({}) as any;      
+      /**
+       * 数组，[100, 101]对应：前端开发 / Vue
+       */
+      const categoryIds = ref();
+      const ebook = ref();     
       const modalVisible = ref(false);
       const modalLoading = ref(false);
       const handleModalOk = () => {
         modalLoading.value = true;
+        ebook.value.category1Id = categoryIds.value[0];
+        ebook.value.category2Id = categoryIds.value[1];
         axios.post("/ebook/save", ebook.value).then((response) => {
           modalLoading.value = false;
           const data = response.data; // data = commonResp
@@ -241,8 +253,8 @@
        */
       const edit = (record: any) => {
         modalVisible.value = true;
-        ebook.value = record
         ebook.value = Tool.copy(record);
+        categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
       };
 
       /**
@@ -267,11 +279,49 @@
         });
       };
 
-      onMounted(() => {
-        handleQuery({
-          page: 1,
-          size: pagination.value.pageSize,
+      const level1 =  ref();
+      let categorys: any;
+      /**
+       * 查询所有分类
+       **/
+      const handleQueryCategory = () => {
+        loading.value = true;
+        axios.get("/category/all").then((response) => {
+          loading.value = false;
+          const data = response.data;
+          if (data.success) {
+            categorys = data.content;
+            console.log("原始数组：", categorys);
+
+            level1.value = [];
+            level1.value = Tool.array2Tree(categorys, 0);
+            console.log("树形结构：", level1.value);
+            
+            // 加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
+            handleQuery({
+              page: 1,
+              size: pagination.value.pageSize,
+            });
+          } else {
+            message.error(data.message);
+          }
         });
+      };
+ 
+      const getCategoryName = (cid: number) => {
+        // console.log(cid)
+        let result = "";
+        categorys.forEach((item: any) => {
+          if (item.id === cid) {
+            // return item.name; // 注意，这里直接return不起作用
+            result = item.name;
+          }
+        });
+        return result;
+      };
+
+      onMounted(() => {
+        handleQueryCategory();
       });
 
       return {
@@ -282,6 +332,7 @@
         loading,
         handleTableChange,
         handleQuery,
+        getCategoryName,
 
         edit,
         add,
@@ -290,6 +341,9 @@
         modalVisible,
         modalLoading,
         handleModalOk,
+        categoryIds,
+        level1,
+
         handleDelete
       }
     }
