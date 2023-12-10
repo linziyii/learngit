@@ -7,6 +7,7 @@ import com.example.mysql.req.EbookQueryReq;
 import com.example.mysql.req.EbookSaveReq;
 import com.example.mysql.resp.EbookQueryResp;
 import com.example.mysql.resp.PageResp;
+import com.example.mysql.util.CopyUtil;
 import com.example.mysql.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,6 +22,9 @@ import java.util.List;
 public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private SnowFlake snowFlake;
     public PageResp<EbookQueryResp> list(EbookQueryReq ebookQueryReq){
         EbookExample example=new EbookExample();
         EbookExample.Criteria criteria=example.createCriteria();
@@ -44,14 +48,24 @@ public class EbookService {
         pageResp.setList(ebookQueryResp);
         return pageResp;
     }
-    public void save(EbookSaveReq ebookSaveReq){
-        Ebook ebook=new Ebook();
-        Ebook ebook1=new Ebook();
-        BeanUtils.copyProperties(ebookSaveReq,ebook);
-        ebook1=ebookMapper.selectByPrimaryKey(ebookSaveReq.getId());
-        if(ObjectUtils.isEmpty(ebook1)){
+    public void save(EbookSaveReq req){
+//        Ebook ebook=new Ebook();
+//        Ebook ebook1=new Ebook();
+//        BeanUtils.copyProperties(ebookSaveReq,ebook);
+//        ebook1=ebookMapper.selectByPrimaryKey(ebookSaveReq.getId());
+//        if(ObjectUtils.isEmpty(ebook1)){
+//            ebook.setId(snowFlake.nextId());
+//            ebookMapper.insert(ebook);
+//        }else{
+//            ebookMapper.updateByPrimaryKey(ebook);
+//        }
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+        if (ObjectUtils.isEmpty(req.getId())) {
+            // 新增
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
-        }else{
+        } else {
+            // 更新
             ebookMapper.updateByPrimaryKey(ebook);
         }
     }
