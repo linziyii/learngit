@@ -16,6 +16,14 @@ import java.util.List;
 public class CategoryControl {
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/category/all")
+    public CommonResp all() {
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
+        List<CategoryQueryResp> list = categoryService.all();
+        resp.setContent(list);
+        return resp;
+    }
     @GetMapping("/category/list")
     public CommonResp query(@Valid CategoryQueryReq categoryQueryReq){
         CommonResp<List<CategoryQueryResp>> resp=new CommonResp();

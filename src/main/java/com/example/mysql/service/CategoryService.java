@@ -7,6 +7,7 @@ import com.example.mysql.req.CategoryQueryReq;
 import com.example.mysql.req.CategorySaveReq;
 import com.example.mysql.resp.CategoryQueryResp;
 import com.example.mysql.resp.PageResp;
+import com.example.mysql.util.CopyUtil;
 import com.example.mysql.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,6 +23,17 @@ import java.util.List;
 public class CategoryService {
     @Resource
     private CategoryMapper categoryMapper;
+
+    public List<CategoryQueryResp> all() {
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+
+        // 列表复制
+        List<CategoryQueryResp> list = CopyUtil.copyList(categoryList, CategoryQueryResp.class);
+
+        return list;
+    }
     public PageResp<CategoryQueryResp> list(CategoryQueryReq categoryQueryReq){
         CategoryExample example=new CategoryExample();
         CategoryExample.Criteria criteria=example.createCriteria();
