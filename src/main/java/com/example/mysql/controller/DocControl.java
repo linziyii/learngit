@@ -31,7 +31,7 @@ public class DocControl {
         docService.save(docSaveReq);
         return resp;
     }
-    @PostMapping("/doc/delete/{idsStr}")
+    @DeleteMapping("/doc/delete/{idsStr}")
     public CommonResp delete(@PathVariable String idsStr){
         CommonResp resp=new CommonResp();
         List<String> list=Arrays.asList(idsStr.split(","));

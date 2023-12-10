@@ -29,7 +29,7 @@ public class UserControl {
         userService.save(userSaveReq);
         return resp;
     }
-    @PostMapping("/user/delete/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public CommonResp delete(@PathVariable Long id){
         CommonResp resp=new CommonResp();
         userService.delete(id);
