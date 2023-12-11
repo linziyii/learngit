@@ -1,19 +1,27 @@
 package com.example.mysql.service;
 
+import com.example.mysql.config.WebSocketConfig;
 import com.example.mysql.entity.Content;
 import com.example.mysql.entity.ContentExample;
 import com.example.mysql.entity.Doc;
 import com.example.mysql.entity.DocExample;
+import com.example.mysql.exception.BusinessException;
+import com.example.mysql.exception.BusinessExceptionCode;
 import com.example.mysql.mapper.ContentMapper;
 import com.example.mysql.mapper.DocMapper;
+import com.example.mysql.mapper.DocMapperCust;
 import com.example.mysql.req.DocQueryReq;
 import com.example.mysql.req.DocSaveReq;
 import com.example.mysql.resp.DocQueryResp;
 import com.example.mysql.resp.PageResp;
+import com.example.mysql.util.RedisUtil;
+import com.example.mysql.util.RequestContext;
 import com.example.mysql.util.SnowFlake;
+import com.example.mysql.websocket.WebSocketServer;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Select;
+import org.jboss.logging.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -31,6 +39,12 @@ public class DocService {
     private DocMapper docMapper;
     @Resource
     private ContentMapper contentMapper;
+    @Resource
+    private DocMapperCust docMapperCust;
+    @Resource
+    private RedisUtil redisUtil;
+    @Resource
+    WsService wsService;
     public PageResp<DocQueryResp> list(DocQueryReq docQueryReq){
         DocExample example=new DocExample();
         DocExample.Criteria criteria=example.createCriteria();
@@ -63,6 +77,8 @@ public class DocService {
         BeanUtils.copyProperties(docSaveReq,content);
         doc1=docMapper.selectByPrimaryKey(docSaveReq.getId());
         if(ObjectUtils.isEmpty(doc1)){
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(doc);
             List<Doc> i=docMapper.selectByExample(docExample);
             content.setId(i.get(0).getId());
@@ -96,11 +112,28 @@ public class DocService {
     }
     public String findcontent(Long id){
         Content content=contentMapper.selectByPrimaryKey(id);
+
+        //增加文档阅读数
+        docMapperCust.increaseViewCount(id);
         if(ObjectUtils.isEmpty(content)){
             return  "";
         }
         else{
             return content.getContent();
         }
+    }
+    public void vote(Long id){
+        String key= RequestContext.getRemoteAddr();
+        if(redisUtil.validateRepeat("DOC_VOTE_"+id+"key",3600*24)){
+            docMapperCust.increaseVoteCount(id);
+        }else{
+            throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
+        }
+        Doc docDb = docMapper.selectByPrimaryKey(id);
+        String logid= (String) MDC.get("LOG_ID");
+        wsService.senfInfo(docDb.getName(),logid);
+    }
+    public void updateEbookInfo(){
+        docMapperCust.updateEbookInfo();
     }
 }

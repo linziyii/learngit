@@ -59,4 +59,11 @@ public class DocControl {
         commonResp.setContent(list);
         return commonResp;
     }
+    @ApiOperation(value = "点赞功能",notes="传入文档id")
+    @GetMapping("/doc/vote/{id}")
+    public CommonResp vote(@PathVariable Long id){
+        CommonResp commonResp=new CommonResp();
+        docService.vote(id);
+        return commonResp;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.mysql.config;
 
+import com.example.mysql.aspect.Logaspect;
 import com.example.mysql.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

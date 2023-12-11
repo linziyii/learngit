@@ -3,8 +3,10 @@ package com.example.mysql.interceptor;
 import com.alibaba.fastjson.JSON;
 import com.example.mysql.resp.UserLoginResp;
 import com.example.mysql.service.UserService;
+import com.example.mysql.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -22,10 +24,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Resource
     private RedisTemplate redisTemplate;
-
+    @Resource
+    private SnowFlake snowFlake;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 打印请求信息
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
         LOG.info("------------- LoginInterceptor 开始 -------------");
         long startTime = System.currentTimeMillis();
         request.setAttribute("requestStartTime", startTime);
