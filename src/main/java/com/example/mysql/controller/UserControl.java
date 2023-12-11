@@ -9,19 +9,31 @@ import com.example.mysql.resp.UserLoginResp;
 import com.example.mysql.resp.UserQueryResp;
 import com.example.mysql.resp.PageResp;
 import com.example.mysql.service.UserService;
+import com.example.mysql.util.SnowFlake;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.TimeoutUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping
 public class UserControl {
     @Autowired
     private UserService userService;
+    @Resource
+    private RedisTemplate redisTemplate;
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    @Resource
+    private SnowFlake snowFlake;
     @ApiOperation(value = "")
     @GetMapping("/user/list")
     public CommonResp query(@Valid UserQueryReq userQueryReq){
@@ -60,8 +72,20 @@ public class UserControl {
         userLoginReq.setPassword(DigestUtils.md5DigestAsHex(userLoginReq.getPassword().getBytes(StandardCharsets.UTF_8)));
         CommonResp resp=new CommonResp();
         UserLoginResp userLoginResp=userService.login(userLoginReq);
+        Long token= snowFlake.nextId();
+        LOG.info("生成token：{}，并放入redis中",token);
+        userLoginResp.setToken(token.toString());
+        redisTemplate.opsForValue().set(token.toString(),userLoginResp,3600*24, TimeUnit.SECONDS);
         resp.setContent(userLoginResp);
         return resp;
+    }
+    @GetMapping("/user/logout/{token}")
+    public CommonResp logout(@PathVariable String token){
+        CommonResp commonResp=new CommonResp();
+        redisTemplate.delete(token);
+        LOG.info("从redis中删除token：{}",token);
+        commonResp.setMessage("token已经清除，退出登录成功！");
+        return commonResp;
     }
 
 }

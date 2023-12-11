@@ -69,7 +69,7 @@ public class DocService {
             contentMapper.insert(content);
         }else{
             docMapper.updateByPrimaryKey(doc);
-            contentMapper.updateByExampleWithBLOBs(content,new ContentExample());
+            contentMapper.updateByPrimaryKeySelective(content);
         }
     }
     public void delete(Long id){

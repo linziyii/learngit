@@ -1,10 +1,21 @@
 package com.example.mysql.resp;
 
-public class UserLoginResp {
+import java.io.Serializable;
+
+public class UserLoginResp implements Serializable{
     private Long id;
 
     private String loginName;
     private String name;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String toke) {
+        this.token = toke;
+    }
 
     public Long getId() {
         return id;
