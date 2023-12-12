@@ -360,6 +360,8 @@ const editor = ref<E | null>(null);
               if (data.success) {
                 // 重新加载列表
                 handleQuery();
+              } else {
+                message.error(data.message);
               }
             });
           },
