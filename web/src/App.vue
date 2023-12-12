@@ -24,7 +24,7 @@ const openKeys = ref<string[]>(['sub1']);
   });
 </script>
 
-<style scoped>
+<!-- <style scoped>
 #components-layout-demo-top-side-2 .logo {
   float: left;
   width: 120px;
@@ -44,4 +44,4 @@ const openKeys = ref<string[]>(['sub1']);
 .a-item a{
   color: gray;
 }
-</style>
+</style> -->
