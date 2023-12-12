@@ -89,7 +89,7 @@
             v-model:value="category.parent"
             ref="select"
           >
-            <a-select-option value="0">
+            <a-select-option :value="0">
               无
             </a-select-option>
             <a-select-option v-for="c in level1" :key="c.id" :value="c.id" :disabled="category.id === c.id">
@@ -124,11 +124,11 @@
             key: 'name',
             dataIndex: 'name'
           },
-          {
-            title: '父分类',
-            key: 'parent',
-            dataIndex: 'parent'
-          },
+          // {
+          //   title: '父分类',
+          //   key: 'parent',
+          //   dataIndex: 'parent'
+          // },
           {
             title: '顺序',
             key: 'sort',
