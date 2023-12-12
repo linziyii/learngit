@@ -27,12 +27,22 @@
             </a-form-item>
           </a-form>
         </p>
+        <p>
+        <a-alert
+                class="tip"
+                message="小提示：这里的分类会显示到首页的侧边菜单"
+                type="info"
+                closable
+        />
+       </p>
         <a-table
+          v-if="level1.length > 0"
           :columns="columns" 
           :row-key="record => record.id"   
           :data-source="level1"
           :loading="loading"
           :pagination="false"
+          :defaultExpandAllRows="true"
         >
         <template #headerCell="{ column }">
           <template v-if="column.key === 'name'">
@@ -154,7 +164,7 @@
          * }]
          */
           const level1 = ref();   //一级分类树，children属性就是二级分类
-
+          level1.value = [];
         /**
          * 数据查询
          **/
