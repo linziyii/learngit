@@ -93,10 +93,25 @@ create table `ebook_snapshot` (
                                   primary key (`id`),
                                   unique key `ebook_id_date_unique` (`ebook_id`, `date`)
 ) engine=innodb default charset=utf8mb4 comment='电子书快照表';
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第一章', 1, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第二章', 2, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第三章', 3, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第四章', 4, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第五章', 5, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 18, '第一讲', 1, 0, 0);
-insert into `content` (id,content) values (23,'鲁智深棒打白骨精！');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+第一卷 石猴出世，悟道长生', 1, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+第一回 灵根育孕源流出 心性修持大道生', 1, 0, 0);
+insert into `content` (id,content) values (24,'东胜神洲傲来国海中有花果山，山项上一仙石孕育出一石猴。石猴在所居涧水源头寻到名为“水帘洞”的石洞，被群猴拥戴为王。又过三五百年，石猴忽为人生无常，不得久寿而悲啼。根据一老猴指点，石猴经南赡训洲到西牛贺洲，上灵台方寸山，入斜月三星洞，拜见须菩提祖师，被收为徒，起名曰孙悟空。');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+第二回 悟彻菩提真妙理 断魔归本合元神', 2, 0, 0);
+insert into `content` (id,content) values (25,'悟空从祖师学得长生之道、七十二般变化及“筋斗云”。一日，悟空受众人挑唆，变为松树，引起祖师不快，被逐出洞。回到花果山，与占山妖魔厮斗取胜，带回被掳的众猴与物品。');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+第二卷 心比天高，扰天宫不得安宁', 2, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+第三回 官封弼马心何足 名注齐天意未宁', 1, 0, 0);
+insert into `content` (id,content) values (28,'悟空被授以“弼马温”之官，他得知此官为末等职，回花果山。玉帝命托塔李天王与其子哪吒太子擒悟空。被悟空打败。金星再次招来悟空。玉帝命造齐天大圣府，让悟空居住。');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+第四回 乱蟠桃大圣偷丹 反天宫诸神捉怪', 2, 0, 0);
+insert into `content` (id,content) values (29,'悟空管理蟠桃园，吃尽园中大桃。又赴瑶池，喝光仙酒；吃尽太上老君葫芦内的金丹。逃回花果山。玉帝令托塔天王率天兵去捉拿悟空。悟空打退了众天神。');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+第五回 观音赴会问原因 小圣施威降大圣', 2, 0, 0);
+insert into `content` (id,content) values (30,'南海观音徒弟木叉助天王，被战败。观音又荐二郎神。二郎神与悟空大战，太上老君在天观战，丢下金刚套，击中悟空。众神押其回上界。玉帝传旨处死。');
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+第六回 八卦炉中逃大圣 五行山下定心猿', 2, 0, 0);
+insert into `content` (id,content) values (31,'太上老君将悟空置入炼丹炉烧炼，四十九天后，悟空出来，大闹天宫。玉帝请来如来佛。孙悟空一路筋斗云，跳不出佛掌。如来将五指化为大山，压住悟空。命土地神用铁丸铜汁饲喂悟空。');
