@@ -1,6 +1,26 @@
 <template>
   <a-layout-header class="header">
-    <div class="logo">MyKi知识库</div>
+    <div class="logo">MyKi知识库
+
+    </div>
+    <div  class="log">
+      <a-popconfirm
+        title="确认退出登录?"
+        ok-text="是"
+        cancel-text="否"
+        @confirm="logout()"
+      >
+        <a class="login-menu" v-show="user.id">
+          <a-button type="primary">退出登录</a-button>
+        </a>
+      </a-popconfirm>
+      <a class="login-menu" v-show="user.id">
+        <span>您好：{{user.name}}</span>
+      </a>
+      <a class="login-menu-login" v-show="!user.id" @click="showLoginModal">
+        <a-button type="primary">登录</a-button>
+      </a>
+    </div>
     <a-menu
       theme="dark"
       mode="horizontal"
@@ -19,24 +39,11 @@
         <router-link to="/admin/category">分类管理</router-link>
       </a-menu-item>
       <a-menu-item key="/about">
-        <router-link to="/about">关于我们</router-link>
+        <router-link to="/about">关于我</router-link>
       </a-menu-item>
-      <a-popconfirm
-        title="确认退出登录?"
-        ok-text="是"
-        cancel-text="否"
-        @confirm="logout()"
-      >
-        <a class="login-menu" v-show="user.id">
-          <span>退出登录</span>
-        </a>
-      </a-popconfirm>
-      <a class="login-menu" v-show="user.id">
-        <span>您好：{{user.name}}</span>
-      </a>
-      <a class="login-menu" v-show="!user.id" @click="showLoginModal">
-        <span>登录</span>
-      </a>
+
+
+
     </a-menu>
 
     <a-modal
@@ -139,9 +146,22 @@
     color: white;
     font-size: 18px;
   }
-  .login-menu {
+  /* .login-menu {
     float: right;
-    color: white;
+    color: pink;
     padding-left: 10px;
+  } */
+    .login-menu {
+    width: 120px;
+    height: 31px;
+    float: right;
+    color: greenyellow;
+    font-size: 16px;
+  }
+  .login-menu-login {
+      width: 120px;
+    height: 31px;
+    float: right;
+    font-size: 18px;
   }
 </style>
