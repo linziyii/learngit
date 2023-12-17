@@ -93,3 +93,10 @@ create table `ebook_snapshot` (
                                   primary key (`id`),
                                   unique key `ebook_id_date_unique` (`ebook_id`, `date`)
 ) engine=innodb default charset=utf8mb4 comment='电子书快照表';
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第一章', 1, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第二章', 2, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第三章', 3, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第四章', 4, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 0, '第五章', 5, 0, 0);
+insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (8, 18, '第一讲', 1, 0, 0);
+insert into `content` (id,content) values (23,'鲁智深棒打白骨精！');

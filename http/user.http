@@ -1,3 +1,3 @@
-POST http://localhost:8081/user/save
+POST http://localhost:8081/user/save?loginName=test&name=hello&password=123456
 ###
-POST http://localhost:8081/user/login
+POST http://localhost:8081/user/login?loginName=test&password=123456

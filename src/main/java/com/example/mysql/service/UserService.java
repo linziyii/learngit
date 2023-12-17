@@ -63,8 +63,6 @@ public class UserService {
         }else{
             UserExample userExample=new UserExample();
             userExample.createCriteria().andIdEqualTo(userSaveReq.getId());
-            user.setLoginName(null);
-            user.setPassword(null);
             userMapper.updateByExample(user,userExample);
         }
     }

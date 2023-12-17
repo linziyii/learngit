@@ -56,10 +56,8 @@ public class CategoryService {
     }
     public void save(CategorySaveReq categorySaveReq){
         Category category=new Category();
-        SnowFlake snowFlake=new SnowFlake(1,1);
         BeanUtils.copyProperties(categorySaveReq,category);
         if(ObjectUtils.isEmpty(category.getId())){
-            category.setId(snowFlake.nextId());
             categoryMapper.insert(category);
         }else{
             categoryMapper.updateByPrimaryKey(category);
