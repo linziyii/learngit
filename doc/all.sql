@@ -93,25 +93,46 @@ create table `ebook_snapshot` (
                                   primary key (`id`),
                                   unique key `ebook_id_date_unique` (`ebook_id`, `date`)
 ) engine=innodb default charset=utf8mb4 comment='电子书快照表';
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (26,7, 0, '
 第一卷 石猴出世，悟道长生', 1, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (24,7, 26, '
 第一回 灵根育孕源流出 心性修持大道生', 1, 0, 0);
 insert into `content` (id,content) values (24,'东胜神洲傲来国海中有花果山，山项上一仙石孕育出一石猴。石猴在所居涧水源头寻到名为“水帘洞”的石洞，被群猴拥戴为王。又过三五百年，石猴忽为人生无常，不得久寿而悲啼。根据一老猴指点，石猴经南赡训洲到西牛贺洲，上灵台方寸山，入斜月三星洞，拜见须菩提祖师，被收为徒，起名曰孙悟空。');
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (25,7, 26, '
 第二回 悟彻菩提真妙理 断魔归本合元神', 2, 0, 0);
 insert into `content` (id,content) values (25,'悟空从祖师学得长生之道、七十二般变化及“筋斗云”。一日，悟空受众人挑唆，变为松树，引起祖师不快，被逐出洞。回到花果山，与占山妖魔厮斗取胜，带回被掳的众猴与物品。');
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 0, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (27,7, 0, '
 第二卷 心比天高，扰天宫不得安宁', 2, 0, 0);
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (28,7, 27, '
 第三回 官封弼马心何足 名注齐天意未宁', 1, 0, 0);
 insert into `content` (id,content) values (28,'悟空被授以“弼马温”之官，他得知此官为末等职，回花果山。玉帝命托塔李天王与其子哪吒太子擒悟空。被悟空打败。金星再次招来悟空。玉帝命造齐天大圣府，让悟空居住。');
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (29,7, 27, '
 第四回 乱蟠桃大圣偷丹 反天宫诸神捉怪', 2, 0, 0);
 insert into `content` (id,content) values (29,'悟空管理蟠桃园，吃尽园中大桃。又赴瑶池，喝光仙酒；吃尽太上老君葫芦内的金丹。逃回花果山。玉帝令托塔天王率天兵去捉拿悟空。悟空打退了众天神。');
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (30,7, 27, '
 第五回 观音赴会问原因 小圣施威降大圣', 2, 0, 0);
 insert into `content` (id,content) values (30,'南海观音徒弟木叉助天王，被战败。观音又荐二郎神。二郎神与悟空大战，太上老君在天观战，丢下金刚套，击中悟空。众神押其回上界。玉帝传旨处死。');
-insert into `doc` (ebook_id, parent, name, sort, view_count, vote_count) values (7, 27, '
+insert into `doc` (id,ebook_id, parent, name, sort, view_count, vote_count) values (31,7, 27, '
 第六回 八卦炉中逃大圣 五行山下定心猿', 2, 0, 0);
 insert into `content` (id,content) values (31,'太上老君将悟空置入炼丹炉烧炼，四十九天后，悟空出来，大闹天宫。玉帝请来如来佛。孙悟空一路筋斗云，跳不出佛掌。如来将五指化为大山，压住悟空。命土地神用铁丸铜汁饲喂悟空。');
+
+insert into `doc` (id, ebook_id, parent, name, sort, view_count, vote_count)
+values (40,2,0,'1、Vue简介',1,0,0),
+       (41,2,40,'1-1 Vue框架特性',1,0,0),
+       (42,2,40,'1-2 数据驱动视图',2,0,0),
+       (43,2,40,'1-3 双向数据绑定',3,0,0),
+       (44,2,40,'1-5 MVVM 的工作原理',4,0,0);
+insert into `content`(id, content)
+values (41,'数据驱动视图和双向数据绑定'),
+       (42,'在使用了 vue 的页面中，vue 会监听数据的变化，从而自动重新渲染页面的结构'),
+       (43,'在填写表单时，双向数据绑定可以辅助开发者在不操作 DOM 的前提下，自动把用户填写的内容同步到数据源中。'),
+       (44,'ViewModel 作为 MVVM 的核心，是它把当前页面的数据源（Model）和页面的结构（View）连接在了一起');
+insert into `doc` (id, ebook_id, parent, name, sort, view_count, vote_count)
+values (45,2,0,'2、Vue的指令与过滤器',2,0,0),
+       (46,2,45,'2-1 指令的概念',1,0,0),
+       (47,2,45,'2-2 内容渲染指令',2,0,0),
+       (48,2,45,'2-3 属性绑定指令',3,0,0);
+insert into  `content`(id, content)
+values (46,'指令（Directives）是 vue 为开发者提供的模板语法，用于辅助开发者渲染页面的基本结构。'),
+       (47,'内容渲染指令用来辅助开发者渲染 DOM 元素的文本内容。'),
+       (48,'如果需要为元素的属性动态绑定属性值，则需要用到 v-bind 属性绑定指令。');

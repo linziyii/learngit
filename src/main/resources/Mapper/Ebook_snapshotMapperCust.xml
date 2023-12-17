@@ -29,12 +29,12 @@
             t1.`date` as `date`,
             sum(t1.view_count) as viewCount,
             sum(t1.vote_count) as voteCount,
-            sum(t1.view_increase) as viewIncreas,
+            sum(t1.view_increase) as viewIncrease,
             sum(t1.vote_increase) as voteIncrease
         from ebook_snapshot t1
         where t1.date>=date_sub(current_date,interval 1 day)
         group by t1.`date`
-        order by t1.`date` asc;
+        order by t1.`date` ;
     </select>
 
     <select id="get30Statistic" resultType="com.example.mysql.resp.StatisticResp">
