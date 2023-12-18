@@ -1,13 +1,14 @@
 <template>
   <div style="background: #ececec; padding: 30px">
     <a-card title="关于MyKi项目" :bordered="false" >
-      <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="SpringBootVue3_WIKI_0"></a>SpringBoot+Vue3 实战WIKI知识库系统</h1>
+      <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="SpringBootVue3_WIKI_0"></a>SpringBoot+Vue3 MyKi项目</h1>
 <h2 class="code-line" data-line-start=2 data-line-end=3 ><a id="1_2"></a>1、项目说明：</h2>
+<h3 class="code-line" data-line-start=2 data-line-end=3 ><a id="1_2"></a>MyKi译为my wiki,是新一代简洁的知识库系统</h3>
 <h2 class="code-line" data-line-start=4 data-line-end=5 ><a id="11_4"></a>1.1安装说明：</h2>
 <h3 class="code-line" data-line-start=6 data-line-end=7 ><a id="111_6"></a>1.1.1项目初始化：</h3>
-<pre><code class="has-line-data" data-line-start="9" data-line-end="12">cd web
-npm install
-npm run serve
+<pre><code class="has-line-data" data-line-start="9" data-line-end="12">                  cd web
+                  npm install
+启动前端： npm run serve
 </code></pre>
 <ul>
 <li class="has-line-data" data-line-start="13" data-line-end="14">sql文件在doc文件夹下可以找到</li>
