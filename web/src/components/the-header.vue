@@ -14,8 +14,14 @@
           <a-button type="primary">退出登录</a-button>
         </a>
       </a-popconfirm>
-      <a class="login-menu" v-show="user.id">
+      <a class="login-menu-a" v-show="user.id">
         <span>您好：{{user.name}}</span>
+
+        <a-avatar :size="{ xs: 12, sm: 24, md: 32, lg: 48, xl: 48, xxl: 48 }" style="background-color: rgba(22, 119,255); margin-left: 10px;">
+          <template #icon>
+            <AntDesignOutlined />
+          </template>
+        </a-avatar>
       </a>
       <a class="login-menu-login" v-show="!user.id" @click="showLoginModal">
         <a-button type="primary">登录</a-button>
@@ -69,7 +75,7 @@
   import axios from 'axios';
   import { message } from 'ant-design-vue';
   import store from "@/store";
-
+  import { AntDesignOutlined } from '@ant-design/icons-vue';
   declare let hexMd5: any;
   declare let KEY: any;
 
@@ -155,7 +161,14 @@
     width: 120px;
     height: 31px;
     float: right;
-    color: greenyellow;
+    color: white;
+    font-size: 16px;
+  }
+  .login-menu-a {
+    width: 180px;
+    height: 31px;
+    float: right;
+    color: white;
     font-size: 16px;
   }
   .login-menu-login {
