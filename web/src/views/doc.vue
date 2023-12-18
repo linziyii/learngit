@@ -2,10 +2,9 @@
   <a-layout>
     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
       <h3 v-if="level1.length === 0">对不起，找不到相关文档！</h3>
-      <a-row>
+      <a-row v-if="level1.length > 0">
         <a-col :span="6">
           <a-tree
-            v-if="level1.length > 0"
             :tree-data="level1"
             @select="onSelect"
             :field-names="{ title: 'name', key: 'id', value: 'id' }"
@@ -19,12 +18,11 @@
             <h2>{{doc.name}}</h2>
             <div>
               <span v-if="doc">阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;
-              <span v-if="doc">点赞数：{{doc.voteCount}}</span>
             </div>
             <a-divider style="height: 2px; background-color: #9999cc"/>
           </div>
-          <div class="wangeditor" v-if="html" :innerHTML="html"></div>
-          <div class="vote-div">
+          <a-card a-card :title="doc.name" :bordered="false" ><div class="wangeditor" v-if="html !== null" v-html="html"></div></a-card>
+          <div class="vote-div" v-if="doc">
             <a-button type="primary" shape="round" :size="'large'" @click="vote">
               <template #icon><LikeOutlined /> &nbsp;点赞：{{doc.voteCount}} </template>
             </a-button>
@@ -47,7 +45,7 @@
     setup() {
       const route = useRoute();
       const docs = ref();
-      const html = ref();
+      const html = ref("");
       const defaultSelectedKeys = ref();
       defaultSelectedKeys.value = [];
       // 当前选中的文档
