@@ -8,22 +8,22 @@
             v-if="level1.length > 0"
             :tree-data="level1"
             @select="onSelect"
-            :replaceFields="{title: 'name', key: 'id', value: 'id'}"
+            :field-names="{ title: 'name', key: 'id', value: 'id' }"
             :defaultExpandAll="true"
             :defaultSelectedKeys="defaultSelectedKeys"
           >
           </a-tree>
         </a-col>
         <a-col :span="18">
-          <div>
+          <div v-if="doc">
             <h2>{{doc.name}}</h2>
             <div>
-              <span>阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;
-              <span>点赞数：{{doc.voteCount}}</span>
+              <span v-if="doc">阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;
+              <span v-if="doc">点赞数：{{doc.voteCount}}</span>
             </div>
             <a-divider style="height: 2px; background-color: #9999cc"/>
           </div>
-          <div class="wangeditor" :innerHTML="html"></div>
+          <div class="wangeditor" v-if="html" :innerHTML="html"></div>
           <div class="vote-div">
             <a-button type="primary" shape="round" :size="'large'" @click="vote">
               <template #icon><LikeOutlined /> &nbsp;点赞：{{doc.voteCount}} </template>
