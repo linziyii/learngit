@@ -9,7 +9,7 @@
 
     </a-card>
 
-    <a-row>
+    <a-row  v-show="user.id">
       <a-col :span="24">
         <a-card>
           <a-row>
@@ -42,7 +42,7 @@
       </a-col>
     </a-row>
     <br>
-    <a-row :gutter="16">
+    <a-row v-show="user.id" :gutter="16">
       <a-col :span="12">
         <a-card>
           <a-row>
@@ -97,7 +97,7 @@
       </a-col>
     </a-row>
     <br>
-    <a-row>
+    <a-row v-show="user.id">
       <a-col :span="24" id="main-col">
         <div id="main" style="width: 100%;height:300px;"></div>
       </a-col>
@@ -106,14 +106,16 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, onMounted } from 'vue'
+  import { defineComponent, ref,  computed, onMounted } from 'vue'
   import axios from 'axios';
+  import store from "@/store";
 
   declare let echarts: any;
 
   export default defineComponent({
     name: 'the-welcome',
     setup () {
+      const user = computed(() => store.state.user);
       const statistic = ref();
       statistic.value = {};
       const getStatistic = () => {
@@ -256,6 +258,7 @@
       });
 
       return {
+        user,
         statistic
       }
     }

@@ -20,12 +20,12 @@
 <p class="has-line-data" data-line-start="26" data-line-end="27">exception处理异常,filter实现过滤器，aspect为切面类，config存放配置类，util存放工具类。</p>
 <p class="has-line-data" data-line-start="30" data-line-end="31">前端项目结构：</p>
 <p class="has-line-data" data-line-start="34" data-line-end="35">常见的vue 项目结构：</p>
-<p class="has-line-data" data-line-start="36" data-line-end="37">dist为编译vue后生成的执行目录直接部署在服务器上运行，router中指定页面路由跳转的信息，views定义视图层。</p>
+<p class="has-line-data" data-line-start="36" data-line-end="37">dist为编译vue后生成的执行目登录直接部署在服务器上运行，router中指定页面路由跳转的信息，views定义视图层。</p>
 <h3 class="code-line" data-line-start=38 data-line-end=39 ><a id="13_38"></a>1.3项目所使用的技术栈：</h3>
 <h2 class="code-line" data-line-start=42 data-line-end=43 ><a id="2_42"></a>2、项目展示</h2>
 <h3 class="code-line" data-line-start=46 data-line-end=47 ><a id="21_46"></a>2.1访客浏览界面：</h3>
 <h4 class="code-line" data-line-start=48 data-line-end=49 ><a id="211__48"></a>2.1.1 未登录状态下的首页</h4>
-<p class="has-line-data" data-line-start="56" data-line-end="57">使用echarts图表自动展示访问人数,并实时的显示点赞数和总阅读量，点赞量和点赞率，左侧显示的电子书分类在登陆后由管理员进行编辑。</p>
+<p class="has-line-data" data-line-start="56" data-line-end="57">使用echarts图表自动展示访问人数,并实时的显示点赞数和总阅读量，点赞量和点赞率，左侧显示的电子书分类在录后由管理员进行编辑。</p>
 <h4 class="code-line" data-line-start=58 data-line-end=59 ><a id="212__58"></a>2.1.2 游客访问电子书页面：</h4>
 <p class="has-line-data" data-line-start="62" data-line-end="63"><img src="image/vistor_ebook.png" alt="vistor_ebook"></p>
 <p class="has-line-data" data-line-start="66" data-line-end="67">使用层级树的方式展示电子书，并实现了阅读量统计以及点赞功能，在访客点击了点赞按钮后，会对管理员进行通知：如下图所示：</p>
