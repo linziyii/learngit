@@ -27,9 +27,12 @@
       <div class="welcome" v-show="isShowWelcome">
         <the-welcome></the-welcome>
       </div>
-      <a-list v-show="!isShowWelcome" item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
-        <template #renderItem="{ item }">
-          <a-list-item key="item.name">
+
+        <a-list v-show="!isShowWelcome" item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+        
+          <template #renderItem="{ item }">
+            <a-card :bordered="false" style="width: 300px; height: 240px;" hoverable>          
+              <a-list-item key="item.name">
             <template #actions>
               <span>
                 <component v-bind:is="'FileOutlined'" style="margin-right: 8px" />
@@ -52,9 +55,12 @@
               </template>
               <template #avatar><a-avatar :src="item.cover"/></template>
             </a-list-item-meta>
-          </a-list-item>
+          </a-list-item></a-card>
+
         </template>
       </a-list>
+ 
+
   </a-layout-content>
   </a-layout>
 </template>
